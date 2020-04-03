@@ -7,6 +7,7 @@ require('dotenv').config();
  */
 
 var app = require('../app');
+var core = require('../core');
 var debug = require('debug-logger')('timer:server');
 var http = require('http');
 
@@ -22,6 +23,12 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
+
+io.on('connect', client => {
+  client.on('disconnect', () => core.Clients.disconnect(client));
+  core.Clients.connect(client);
+});
 
 /**
  * Listen on provided port, on all network interfaces.
