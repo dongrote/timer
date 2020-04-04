@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npm --prefix ../ui run build",
     "install": "rm -rf public && mkdir public && cp -r ../ui/build/* public/",
-    "start": "nodemon -i public/ ./bin/www",
+    "nodemon": "nodemon -i public/ ./bin/www",
+    "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
