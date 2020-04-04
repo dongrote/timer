@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {Container, Segment, Grid, Divider, Header, Icon, Search, Button} from 'semantic-ui-react';
+import {Container, Segment, Grid, Divider, Form, Header, Icon, Input, Button} from 'semantic-ui-react';
 
 class LandingView extends Component {
-  state = {roomId: ''};
+  state = {roomId: '', joinButtonDisabled: true};
 
   roomIdInput(value) {
-    this.setState({roomId: value});
+    this.setState({roomId: value, joinButtonDisabled: value.length === 0});
   }
 
   async onJoin() {
@@ -22,27 +22,23 @@ class LandingView extends Component {
   render() {
     return (
       <Container>
-        <Segment placeholder>
-          <Grid columns={2} stackable textAlign='center'>
-            <Divider vertical>Or</Divider>
-            <Grid.Row verticalAlign='middle'>
-              <Grid.Column>
-                <Header icon>
-                  <Icon name='search' />
-                  Join a Room
-                </Header>
-                <Search placeholder='Room ID' onInput={e => this.roomIdInput(e.target.value)}/>
-                <Button primary onClick={() => this.onJoin(this.state.roomId)}>Join</Button>
-              </Grid.Column>
-              <Grid.Column>
-                <Header icon>
-                  <Icon name='world' />
+        <Segment>
+          <Input iconPosition='left' placeholder='Room ID' action fluid>
+            <Icon name='users' />
+            <input onInput={e => this.roomIdInput(e.target.value)} />
+            <Button primary disabled={this.state.joinButtonDisabled} onClick={() => this.onJoin(this.state.roomId)}>Join Room</Button>
+          </Input>
+          <Divider horizontal>Or</Divider>
+            <Grid>
+              <Grid.Row textAlign='center'>
+                <Grid.Column width={16}>
+                <Button icon labelPosition='left' primary onClick={() => this.onCreate()}>
+                  <Icon name='add' />
                   Create a new room
-                </Header>
-                <Button primary onClick={() => this.onCreate()}>Create</Button>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+                </Button>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
         </Segment>
       </Container>
     );

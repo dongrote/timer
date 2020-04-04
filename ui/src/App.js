@@ -10,6 +10,7 @@ class App extends Component {
   state = {
     jwt: null,
     timer: {
+      target: null,
       elapsed: 0,
       running: false,
       lights: {red: false, yellow: false, green: false},
@@ -17,6 +18,7 @@ class App extends Component {
   };
 
   setTimerState(state) {
+    console.log('update timer state', state);
     this.setState({timer: state});
   }
 
@@ -39,10 +41,20 @@ class App extends Component {
     this.loadJsonWebToken();
     this.io = io();
     this.io.on('timer-state', state => this.setTimerState(state));
+    this.fetchState();
+  }
+
+  async fetchState() {
+    var res = await fetch('/api/timer');
+    if (res.ok) {
+      var body = await res.json();
+      this.setTimerState(body);
+    }
   }
 
   joinRoom() {
     this.loadJsonWebToken();
+    this.fetchState();
   }
 
   render() {

@@ -1,44 +1,36 @@
-import React, {Component} from 'react';
-import {Segment, Header, Label} from 'semantic-ui-react';
+import React from 'react';
+import {Container, Header, Label} from 'semantic-ui-react';
 import QRCode from './QRCode';
 import TimeInput from './TimeInput';
 import Stopwatch from './Stopwatch';
 
-class TimerInterface extends Component {
-  state = {time: 0, running: false};
-  async onSet(time) {
-    await fetch(`/api/timer?action=configure&time=${encodeURIComponent(time)}`);
-  }
-
-  async onStart() {
-    await fetch(`/api/timer?action=start`);
-  }
-
-  async onStop() {
-    await fetch(`/api/timer?action=stop`);
-  }
-
-  async onReset() {
-    await fetch(`/api/timer?action=reset`);
-  }
-
-  render() {
-    return (
-      <Segment>
-        <Header>Timer Interface</Header>
-        <Label>Room ID {this.props.roomId}</Label>
-        <QRCode roomId={this.props.roomId} />
-        <TimeInput onSubmit={time => this.onSet(time)} />
-        <Stopwatch
-          time={this.props.timerState.elapsed}
-          running={this.props.timerState.running}
-          onStart={() => this.onStart()}
-          onStop={() => this.onStop()}
-          onReset={() => this.onReset()}
-        />
-      </Segment>
-    );
-  }
+const lightString = lights => {
+  if (!lights) return 'off';
+  if (lights.red) return 'red';
+  if (lights.yellow) return 'yellow';
+  if (lights.green) return 'green';
+  return 'off';
 }
 
-export default TimerInterface;
+const onSet = time => fetch(`/api/timer?action=configure&time=${encodeURIComponent(time)}`);
+const onStart = () => fetch(`/api/timer?action=start`);
+const onStop = () => fetch(`/api/timer?action=stop`);
+const onReset = () => fetch(`/api/timer?action=reset`);
+
+export default props => (
+  <Container text>
+    <Header>Timer Interface</Header>
+    <Label>Room ID {props.roomId}</Label>
+    <QRCode roomId={props.roomId} />
+    <TimeInput onSubmit={time => onSet(time)} />
+    <Stopwatch
+      target={props.timerState.target}
+      elapsed={props.timerState.elapsed}
+      running={props.timerState.running}
+      light={lightString(props.timerState.lights)}
+      onStart={() => onStart()}
+      onStop={() => onStop()}
+      onReset={() => onReset()}
+    />
+  </Container>
+);

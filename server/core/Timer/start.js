@@ -14,7 +14,6 @@ exports = module.exports = (clientId, roomId) => {
     if (timer.running) {
       log.debug(`timer ${roomId} still running`);
       step(timer, 1);
-      log.debug('io.server', io.server);
       Rooms.broadcast(io.server, roomId, 'timer-state', timer);
       setTimeout(() => timeStep(), 1000);
     } 

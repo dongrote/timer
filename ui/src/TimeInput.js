@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Input, Icon, Button} from 'semantic-ui-react';
+import {Segment, Grid, Input, Icon, Button} from 'semantic-ui-react';
 
 class TimeInput extends Component {
   state = {timeString: '0:00'};
@@ -21,21 +21,23 @@ class TimeInput extends Component {
   }
   render() {
     return (
-      <Grid columns={3} stackable>
-        <Grid.Column textAlign='center'>
+      <Segment>
+      <Grid textAlign='center'>
+        <Grid.Row columns={1}>
+          <Grid.Column textAlign='center'>
           <Input iconPosition='left' action placeholder='0:00'>
             <Icon name='clock' />
-            <input onInput={e => this.updateTime(e.target.value)} value={this.state.timeString} />
-            <Button primary type='submit' onClick={() => this.props.onSubmit(this.state.timeInSeconds)}>Set</Button>
+            <input type='tel' onInput={e => this.updateTime(e.target.value)} value={this.state.timeString} />
+            <Button primary type='submit' onClick={() => this.props.onSubmit(this.state.timeInSeconds)}>Custom</Button>
           </Input>
-        </Grid.Column>
-        <Grid.Column textAlign='center'>
-          <Button secondary onClick={() => this.props.onSubmit(3 * 60)}>Evaluation</Button>
-        </Grid.Column>
-        <Grid.Column textAlign='center'>
-          <Button secondary onClick={() => this.props.onSubmit(2 * 60)}>Table Topics</Button>
-        </Grid.Column>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row columns={1} textAlign='center'>
+          <Button color='teal' onClick={() => this.props.onSubmit(3 * 60)}>Evaluation</Button>
+          <Button color='violet' onClick={() => this.props.onSubmit(2 * 60)}>Table Topics</Button>
+        </Grid.Row>
       </Grid>
+      </Segment>
     );
   }
 }
