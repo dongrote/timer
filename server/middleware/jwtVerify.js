@@ -5,5 +5,6 @@ const _ = require('lodash'),
 exports = module.exports = (req, res, next) => core.jwt
   .verify(_.get(req.cookies, 'jwt'))
   .then(jwt => _.set(req, 'jwt', jwt))
+  .then(() => core.Rooms.create(req.jwt.room))
   .then(() => next())
   .catch(err => next(_.set(err, 'statusCode', 401)));
