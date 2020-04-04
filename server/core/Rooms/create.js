@@ -1,10 +1,13 @@
 'use strict';
 const {v4: uuidv4} = require('uuid'),
-  Clients = require('../Clients'),
-  jwt = require('../jwt');
+  rooms = require('./rooms'),
+  log = require('debug-logger')('core:Rooms:create');
 
-exports = module.exports = (clientId, options) => {
-  const room = uuidv4();
-  return Clients.join(clientId, room)
-    .then(() => jwt.sign({room: uuidv4(), timer: true}));
+exports = module.exports = roomId => {
+  const room = roomId || uuidv4();
+  if (!rooms[room]) {
+    log.debug('creating room', room);
+    rooms[room] = {start: new Date()};
+  }
+  return Promise.resolve(room);
 };
