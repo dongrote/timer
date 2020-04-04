@@ -7,7 +7,7 @@ exports = module.exports = (req, res, next) => {
   const {jwt} = req,
     action = _.get(req.query, 'action');
   if (!action) {
-    return next(new HttpError(400));
+    return res.json(core.Rooms.getTimer(jwt.room));
   }
   if (action === 'configure') {
     const state = core.Timer.configure(req.cookies.io, jwt.room, Number(_.get(req.query, 'time', 0)));

@@ -8,17 +8,15 @@ class LandingView extends Component {
     this.setState({roomId: value});
   }
 
-  onJoin() {
-    fetch(`/api/room?room=${encodeURIComponent(this.state.roomId)}`)
-      .then(() => this.props.setRoom(this.state.roomId))
-      .catch(console.error);
+  async onJoin() {
+    await fetch(`/api/room?room=${encodeURIComponent(this.state.roomId)}`);
+    this.props.setRoom(this.state.roomId);
   }
 
-  onCreate() {
-    fetch(`/api/room`, {method: 'POST'})
-      .then(res => res.json())
-      .then(body => this.props.setRoom(body.roomId))
-      .catch(console.error);
+  async onCreate() {
+    var res = await fetch(`/api/room`, {method: 'POST'})
+    var body = await res.json();
+    this.props.setRoom(body.roomId);
   }
 
   render() {
