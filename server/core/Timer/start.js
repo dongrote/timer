@@ -1,6 +1,8 @@
 'use strict';
 const timers = require('./timers'),
   Clients = require('../Clients'),
+  Rooms = require('../Rooms'),
+  step = require('./step'),
   log = require('debug-logger')('core:Timer:start');
 
 exports = module.exports = (clientId, roomId) => {
@@ -11,9 +13,9 @@ exports = module.exports = (clientId, roomId) => {
   (function timeStep() {
     if (timer.running) {
       log.debug(`timer ${roomId} still running`);
-      timer.elapsed++;
+      step(timer, 1);
       log.debug('io.server', io.server);
-      io.server.sockets.emit('timer-state', timer);
+      Rooms.broadcast(io.server, roomId, 'timer-state', timer);
       setTimeout(() => timeStep(), 1000);
     } 
   }());

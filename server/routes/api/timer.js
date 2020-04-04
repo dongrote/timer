@@ -10,20 +10,20 @@ exports = module.exports = (req, res, next) => {
     return next(new HttpError(400));
   }
   if (action === 'configure') {
-    core.Timer.configure(req.cookies.io, jwt.room, Number(_.get(req.query, 'time', 0)))
-    return res.sendStatus(204);
+    const state = core.Timer.configure(req.cookies.io, jwt.room, Number(_.get(req.query, 'time', 0)));
+    return res.json(state);
   }
   if (action === 'start') {
-    core.Timer.start(req.cookies.io, jwt.room);
-    return res.sendStatus(204);
+    const state = core.Timer.start(req.cookies.io, jwt.room);
+    return res.json(state);
   }
   if (action === 'stop') {
-    core.Timer.stop(req.cookies.io, jwt.room);
-    return res.sendStatus(204);
+    const state = core.Timer.stop(req.cookies.io, jwt.room);
+    return res.json(state);
   }
   if (action === 'reset') {
-    core.Timer.reset(req.cookies.io, jwt.room);
-    return res.sendStatus(204);
+    const state = core.Timer.reset(req.cookies.io, jwt.room);
+    return res.json(state);
   }
   return next(new HttpError(400, `invalid action: '${action}'`));
 };
