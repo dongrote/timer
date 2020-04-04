@@ -14,5 +14,5 @@ exports = module.exports = client => {
     ? jwt.verify(cookies.jwt)
       .then(decoded => decoded.room && join(client.id, decoded.room))
       .catch(log.error)
-    : null;
+    : Promise.resolve(null);
 };
