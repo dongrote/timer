@@ -11,6 +11,6 @@ export default props => (<Segment>
     target='_blank'
   />
   <p>
-Or share this link: <a href={`/api/join?room=${encodeURIComponent(props.roomId)}`}>{`http://centricube.lan:3000/api/join?room=${encodeURIComponent(props.roomId)}`}</a>
+Or share this link: <a href={`/api/join?room=${encodeURIComponent(props.roomId)}`}>{`${window.location}api/join?room=${encodeURIComponent(props.roomId)}`}</a>
   </p>
 </Segment>);

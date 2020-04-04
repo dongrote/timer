@@ -18,7 +18,6 @@ class App extends Component {
   };
 
   setTimerState(state) {
-    console.log('update timer state', state);
     this.setState({timer: state});
   }
 
