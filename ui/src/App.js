@@ -59,7 +59,7 @@ class App extends Component {
   render() {
     return this.state.jwt
       ? (
-          <Container fluid>
+          <Container text>
             {this.state.jwt.timer
               ? <TimerInterface
                   timerState={this.state.timer}

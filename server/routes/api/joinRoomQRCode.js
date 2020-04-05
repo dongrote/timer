@@ -10,5 +10,8 @@ exports = module.exports = (req, res, next) => {
   res
     .status(200)
     .set('Content-Type', 'image/png');
-  qrcode.toFileStream(res, `${env.publicUrl()}/api/join?${queryParams.toString()}`);
+  qrcode.toFileStream(res, `${env.publicUrl()}/api/join?${queryParams.toString()}`, {
+    errorCorrectionLevel: 'M',
+    scale: 6,
+  });
 };

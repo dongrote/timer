@@ -11,4 +11,6 @@ exports = module.exports = {
   jwtAlgorithm: () => _.get(process.env, 'JWT_ALGORITHM', 'HS256'),
   jwtExpiresIn: () => `${sessionLifetimeValue()}${sessionLifetimeUnit()}`,
   publicUrl: () => _.get(process.env, 'PUBLIC_URL'),
+  qrCodeErrorCorrectionLevel: () => _.get(process.env, 'QRCODE_ERROR_CORRECTION_LEVEL', 'medium'),
+  qrCodeScale: () => Number(_.get(process.env, 'QRCODE_SCALE', '6')),
 };
